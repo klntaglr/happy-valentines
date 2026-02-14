@@ -34,8 +34,8 @@ import image8 from "../assets/8.jpg";
 import image9 from "../assets/9.jpg";
 import new8 from "../assets/new.jpg";
 import new7 from "../assets/new7.jpg";
-import new6 from "../assets/new6.JPG";
-import new5 from "../assets/new5.JPG";
+import new6 from "../assets/new6.jpg";
+import new5 from "../assets/new5.jpg";
 import new4 from "../assets/new4.jpg";
 import new3 from "../assets/new3.jpg";
 import new2 from "../assets/new2.jpg";
@@ -86,7 +86,7 @@ function Home() {
     { src: usImage, alt: "Us", caption: "2024" },
     { src: usImage, alt: "Us", caption: "2025" },
     { src: usImage, alt: "Us", caption: "2026" },
-    { src: usImage, alt: "Us", caption: "Forever" }
+    { src: usImage, alt: "Us", caption: "Forever" },  
   ];
 
   const opacity = useTransform(
