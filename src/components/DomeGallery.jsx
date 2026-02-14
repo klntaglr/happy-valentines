@@ -10,8 +10,6 @@ import image4 from "../assets/4.jpg";
 import image5 from "../assets/5.jpg";
 import image6 from "../assets/6.jpg";
 import image7 from "../assets/7.jpg";
-import image8 from "../assets/8.jpg";
-import image9 from "../assets/9.jpg";
 
 
 
