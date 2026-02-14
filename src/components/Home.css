@@ -1,0 +1,2232 @@
+/* ===========================
+   GLOBAL RESET & VARIABLES
+   =========================== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Colors */
+  --primary-bg: #fdfbf9;
+  --secondary-bg: #fef9f5;
+  --tertiary-bg: #fff5ed;
+  --text-primary: #161616;
+  --text-secondary: #8b7d6b;
+  --text-tertiary: #a89885;
+  --accent-brown: #a67c52;
+  --accent-rose: #681111;
+  --accent-love: #681111;
+  --accent-gold: #d4b5a0;
+  --accent-light: #f0dfd0;
+
+  /* Fonts */
+  --font-script: "AlexBrush", cursive;
+  --font-body: "Lora", serif;
+
+  /* Spacing */
+  --spacing-xs: clamp(8px, 2vw, 12px);
+  --spacing-sm: clamp(12px, 3vw, 20px);
+  --spacing-md: clamp(20px, 5vw, 40px);
+  --spacing-lg: clamp(30px, 8vw, 60px);
+  --spacing-xl: clamp(40px, 10vw, 80px);
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  font-family: var(--font-body);
+  background: var(--primary-bg);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ===========================
+   CUSTOM FONTS
+   =========================== */
+@font-face {
+  font-family: "Sail";
+  src: url("../assets/fonts/Sail-Regular.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lora";
+  src: url("../assets/fonts/Lora-VariableFont_wght.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "AlexBrush";
+  src: url("../assets/fonts/AlexBrush-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Soria";
+  src: url("/fonts/soria-font.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}@font-face {
+  font-family: "ImperialScript";
+  src: url("/fonts/ImperialScript-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ===========================
+   SMOOTH SCROLL WRAPPER
+   =========================== */
+#smooth-wrapper {
+  overflow: hidden;
+}
+
+#smooth-content {
+  overflow: visible;
+}
+
+/* ===========================
+   CONTAINER
+   =========================== */
+.home-container {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow: visible;
+  background: var(--primary-bg);
+}
+
+/* ===========================
+   PANEL SYSTEM
+   =========================== */
+.panel {
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-panel {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(20px, 4vw, 40px) clamp(30px, 6vw, 60px);
+  background: var(--primary-bg);
+}
+
+.second-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(40px, 8vw, 80px);
+  background: var(--primary-bg);
+}
+
+.second-panel > * {
+  font-family: var(--font-body);
+  font-size: clamp(24px, 4vw, 60px);
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--text-primary);
+  text-align: center;
+  max-width: 1200px;
+}
+
+/* ===========================
+   CORNER TEXT
+   =========================== */
+.corner-text {
+  position: absolute;
+  top: clamp(20px, 3vw, 30px);
+  font-family: var(--font-body);
+  font-size: clamp(10px, 1.2vw, 12px);
+  letter-spacing: clamp(1.5px, 0.2vw, 2px);
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.6);
+  z-index: 20;
+  animation: fadeInCorner 0.8s ease-out backwards;
+  transition: color var(--transition-normal);
+}
+
+.corner-text:hover {
+  color: var(--accent-love);
+}
+
+.corner-text.left {
+  left: clamp(20px, 4vw, 40px);
+  animation-delay: 0.2s;
+}
+
+.corner-text.right {
+  right: clamp(20px, 4vw, 40px);
+  animation-delay: 0.4s;
+}
+
+/* ===========================
+   MAIN CONTENT (CENTERED)
+   =========================== */
+.main-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  min-height: 80vh;
+  position: relative;
+}
+
+/* ===========================
+   TRAIL LAYER FIX
+   =========================== */
+.trail-section {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.trail-section .content {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.text-side {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+  pointer-events: none;
+}
+
+.heading-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ===========================
+   TITLE WRAPPER WITH BACKGROUND
+   =========================== */
+.title-wrapper {
+  position: relative;
+  padding: clamp(80px, 15vw, 120px) clamp(100px, 20vw, 160px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Background flower image */
+.title-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("../assets/bgvalen.png");
+  background-size: clamp(200px, 35%, 500px) !important;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.5;
+  z-index: -1;
+  transition: opacity var(--transition-slow);
+  animation: floatBg 6s ease-in-out infinite;
+}
+
+.title-wrapper:hover::before {
+  opacity: 0.6;
+}
+/* ===========================
+   TITLE WRAPPER WITH BACKGROUND
+   =========================== */
+.title-wrapper1 {
+  position: relative;
+  padding: clamp(80px, 15vw, 120px) clamp(100px, 20vw, 160px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Background flower image */
+.title-wrapper1::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("../assets/ribbon.png");
+background-size: clamp(300px, 55vw, 800px) !important;
+
+  background-repeat: no-repeat;
+  background-position: center;
+    opacity: 0.2;
+  z-index: -1;
+  transition: opacity var(--transition-slow);
+  animation: floatBg 6s ease-in-out infinite;
+}
+
+.title-wrapper1:hover::before {
+    opacity: 0.2;
+}
+
+/* ===========================
+   MAIN TITLE
+   =========================== */
+.main-title {
+  position: relative;
+  z-index: 15;
+  font-family: var(--font-script);
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 0;
+  color: var(--text-primary);
+  font-size: clamp(60px, 10vw, 150px);
+  pointer-events: auto;
+  will-change: opacity, transform;
+}
+
+/* "Happy" - smaller, positioned left */
+.word-1 {
+  display: block;
+  font-size: clamp(50px, 8vw, 110px);
+  margin-right: clamp(150px, 25vw, 300px);
+  transform: translateX(-10%);
+  animation: fadeInLeft 0.8s ease-out;
+  transition: color var(--transition-normal);
+}
+
+/* "Valentines" - larger, positioned right, burgundy color */
+.word-2 {
+  display: block;
+  font-size: clamp(60px, 9vw, 130px);
+  animation: fadeInRight 0.8s ease-out 0.2s backwards;
+  transition: color var(--transition-normal);
+}
+
+/* Big H styling - NO ANIMATION */
+.big-h {
+  display: inline-block;
+  font-size: 1.6em;
+  transform: translateY(0.15em);
+}
+
+/* Big V styling - NO ANIMATION */
+.big-v {
+  display: inline-block;
+  font-size: clamp(1.6em, 3vw, 2.5em);
+  line-height: 0.9;
+  transform: translateY(0.1em);
+}
+
+/* Red color for "Valentines" */
+.highlight-love {
+  color: var(--accent-love);
+  position: relative;
+  margin-left: clamp(80px, 15vw, 160px);
+  transform: translateX(8%);
+}
+
+/* Underline decoration */
+.highlight-love::after {
+  
+  opacity: 0.6;
+  animation: expandLine 0.8s ease-out 1.2s forwards;
+}
+
+/* ===========================
+   ANIMATIONS
+   =========================== */
+@keyframes fadeInCorner {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-10%);
+  }
+}
+
+@keyframes fadeInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(8%);
+  }
+}
+
+@keyframes expandLine {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 80%;
+  }
+}
+
+/* ===========================
+   RESPONSIVE - LARGE DESKTOP
+   =========================== */
+@media (min-width: 1920px) {
+  .home-container {
+    max-width: 1920px;
+    margin: 0 auto;
+  }
+
+  .word-1 {
+    font-size: 120px;
+    margin-right: 350px;
+  }
+
+  .word-2 {
+    font-size: 145px;
+  }
+
+  .title-wrapper {
+    padding: 140px 200px;
+  }
+
+  .corner-text {
+    font-size: 13px;
+    letter-spacing: 2.5px;
+  }
+
+  .highlight-love {
+    margin-left: 180px;
+  }
+}
+
+/* ===========================
+   RESPONSIVE - DESKTOP
+   =========================== */
+@media (min-width: 1440px) and (max-width: 1919px) {
+  .word-1 {
+    font-size: clamp(90px, 7vw, 110px);
+    margin-right: 300px;
+  }
+
+  .word-2 {
+    font-size: clamp(110px, 8vw, 130px);
+  }
+
+  .title-wrapper {
+    padding: 110px 160px;
+  }
+
+  .highlight-love {
+    margin-left: 160px;
+  }
+}
+
+/* ===========================
+   RESPONSIVE - LAPTOP
+   =========================== */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .word-1 {
+    font-size: clamp(70px, 7vw, 95px);
+    margin-right: 250px;
+  }
+
+  .word-2 {
+    font-size: clamp(90px, 8vw, 115px);
+  }
+
+  .title-wrapper {
+    padding: 90px 130px;
+  }
+
+  .title-wrapper::before {
+    background-size: 60%;
+  }
+
+  .highlight-love {
+    margin-left: 140px;
+  }
+}
+
+/* ===========================
+   RESPONSIVE - TABLET (LANDSCAPE)
+   =========================== */
+@media (min-width: 768px) and (max-width: 1023px) and (orientation: landscape) {
+  .home-container {
+    padding: 20px 35px;
+  }
+
+  .word-1 {
+    font-size: clamp(55px, 7vw, 75px);
+    margin-right: 180px;
+    transform: translateX(-8%);
+  }
+
+  .word-2 {
+    font-size: clamp(70px, 9vw, 95px);
+  }
+
+  .title-wrapper {
+    padding: 70px 100px;
+  }
+
+  .title-wrapper::before {
+    background-size: 65%;
+  }
+
+  .corner-text {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+  }
+
+  .highlight-love {
+    margin-left: 110px;
+    transform: translateX(5%);
+  }
+
+  .big-h,
+  .big-v {
+    font-size: 1.5em;
+  }
+}
+
+/* ===========================
+   RESPONSIVE - TABLET (PORTRAIT)
+   =========================== */
+@media (min-width: 768px) and (max-width: 1023px) and (orientation: portrait) {
+  .home-container {
+    padding: 25px 35px;
+  }
+
+  .word-1 {
+    font-size: clamp(50px, 8vw, 70px);
+    margin-right: 150px;
+    transform: translateX(-8%);
+  }
+
+  .word-2 {
+    font-size: clamp(65px, 10vw, 90px);
+  }
+
+  .title-wrapper {
+    padding: 75px 95px;
+  }
+
+  .title-wrapper::before {
+    background-size: 70%;
+  }
+
+  .highlight-love {
+    margin-left: 100px;
+    transform: translateX(6%);
+  }
+}
+
+/* ===========================
+   RESPONSIVE - MOBILE (LANDSCAPE)
+   =========================== */
+@media (max-width: 767px) and (orientation: landscape) {
+  .home-container {
+    padding: 15px 25px;
+    min-height: 100vh;
+  }
+
+  .main-content {
+    min-height: 75vh;
+  }
+
+  .word-1 {
+    font-size: clamp(40px, 8vw, 60px);
+    margin-right: 100px;
+    transform: translateX(-5%);
+  }
+
+  .word-2 {
+    font-size: clamp(50px, 10vw, 75px);
+  }
+
+  .title-wrapper {
+    padding: 50px 70px;
+  }
+
+  .title-wrapper::before {
+    background-size: 75%;
+    opacity: 0.4;
+  }
+
+  .corner-text {
+    font-size: 8px;
+    letter-spacing: 1px;
+    top: 15px;
+  }
+
+  .corner-text.left {
+    left: 15px;
+  }
+
+  .corner-text.right {
+    right: 15px;
+  }
+
+  .highlight-love {
+    margin-left: 70px;
+    transform: translateX(4%);
+  }
+
+  .big-h,
+  .big-v {
+    font-size: 1.4em;
+  }
+}
+
+/* ===========================
+   RESPONSIVE - MOBILE (PORTRAIT)
+   =========================== */
+@media (max-width: 767px) and (orientation: portrait) {
+  .home-container {
+    padding: 20px;
+  }
+
+  .word-1 {
+    font-size: clamp(40px, 9vw, 60px);
+    margin-right: 80px;
+    transform: translateX(-5%);
+  }
+
+  .word-2 {
+    font-size: clamp(55px, 12vw, 80px);
+  }
+
+  .title-wrapper {
+    padding: 55px 45px;
+  }
+
+  .title-wrapper::before {
+    background-size: 80%;
+    opacity: 0.35;
+  }
+
+  .corner-text {
+    font-size: 9px;
+    letter-spacing: 1.2px;
+  }
+
+  .highlight-love {
+    margin-left: 60px;
+    transform: translateX(4%);
+  }
+
+  .big-h {
+    font-size: 1.4em;
+  }
+
+  .big-v {
+    font-size: 1.5em;
+  }
+}
+
+/* ===========================
+   RESPONSIVE - SMALL MOBILE
+   =========================== */
+@media (max-width: 480px) {
+  .home-container {
+    padding: 15px;
+  }
+
+  .main-title {
+    font-size: clamp(50px, 14vw, 70px);
+  }
+
+  .word-1 {
+    font-size: clamp(35px, 10vw, 50px);
+    margin-right: 50px;
+    transform: translateX(-3%);
+  }
+
+  .word-2 {
+    font-size: clamp(45px, 13vw, 65px);
+  }
+
+  .title-wrapper {
+    padding: 45px 30px;
+  }
+
+  .title-wrapper::before {
+    background-size: 90%;
+    opacity: 0.3;
+  }
+
+  .corner-text {
+    font-size: 8px;
+    letter-spacing: 1px;
+    top: 12px;
+  }
+
+  .corner-text.left {
+    left: 12px;
+  }
+
+  .corner-text.right {
+    right: 12px;
+  }
+
+  .highlight-love {
+    margin-left: 40px;
+    transform: translateX(2%);
+  }
+
+  .big-h,
+  .big-v {
+    font-size: 1.3em;
+  }
+
+  .highlight-love::after {
+    bottom: -3px;
+  }
+}
+
+/* ===========================
+   RESPONSIVE - EXTRA SMALL MOBILE
+   =========================== */
+@media (max-width: 360px) {
+  .home-container {
+    padding: 12px;
+  }
+
+  .main-title {
+    font-size: clamp(40px, 15vw, 60px);
+  }
+
+  .word-1 {
+    font-size: clamp(30px, 11vw, 42px);
+    margin-right: 30px;
+    transform: translateX(0);
+  }
+
+  .word-2 {
+    font-size: clamp(38px, 14vw, 55px);
+  }
+
+  .title-wrapper {
+    padding: 35px 20px;
+  }
+
+  .title-wrapper::before {
+    background-size: 100%;
+    opacity: 0.25;
+  }
+
+  .corner-text {
+    font-size: 7px;
+    letter-spacing: 0.8px;
+    top: 10px;
+  }
+
+  .corner-text.left {
+    left: 10px;
+  }
+
+  .corner-text.right {
+    right: 10px;
+  }
+
+  .highlight-love {
+    margin-left: 25px;
+    transform: translateX(0);
+  }
+
+  .big-h,
+  .big-v {
+    font-size: 1.2em;
+  }
+
+  .highlight-love::after {
+    display: none;
+  }
+}
+
+/* ===========================
+   IPAD SPECIFIC
+   =========================== */
+/* iPad Pro 12.9" */
+@media only screen 
+  and (min-device-width: 1024px) 
+  and (max-device-width: 1366px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+  
+  .word-1 {
+    font-size: 80px;
+    margin-right: 220px;
+  }
+
+  .word-2 {
+    font-size: 105px;
+  }
+
+  .title-wrapper {
+    padding: 95px 135px;
+  }
+
+  .highlight-love {
+    margin-left: 130px;
+  }
+}
+
+/* iPad Pro 11" & iPad Air */
+@media only screen 
+  and (min-device-width: 820px) 
+  and (max-device-width: 1024px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+  
+  .word-1 {
+    font-size: 65px;
+    margin-right: 190px;
+  }
+
+  .word-2 {
+    font-size: 88px;
+  }
+
+  .title-wrapper {
+    padding: 80px 115px;
+  }
+
+  .highlight-love {
+    margin-left: 115px;
+  }
+}
+
+/* iPad Mini */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 820px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+  
+  .word-1 {
+    font-size: 58px;
+    margin-right: 165px;
+  }
+
+  .word-2 {
+    font-size: 78px;
+  }
+
+  .title-wrapper {
+    padding: 70px 100px;
+  }
+
+  .highlight-love {
+    margin-left: 105px;
+  }
+}
+
+/* ===========================
+   ACCESSIBILITY
+   =========================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===========================
+   PRINT STYLES
+   =========================== */
+@media print {
+  .home-container {
+    background: white;
+  }
+
+  .corner-text {
+    color: black;
+  }
+
+  .title-wrapper::before {
+    opacity: 0.3;
+  }
+}
+
+/* ===========================
+   SMOOTH PERFORMANCE
+   =========================== */
+.panel {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.main-title,
+.word,
+.corner-text {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+
+/* ===========================
+   RESPONSIVE - SECOND PANEL
+   =========================== */
+@media (max-width: 768px) {
+  .second-panel > * {
+    font-size: clamp(18px, 4vw, 32px);
+    line-height: 1.7;
+  }
+}
+
+@media (max-width: 480px) {
+  .second-panel {
+    padding: clamp(30px, 6vw, 50px);
+  }
+  
+  .second-panel > * {
+    font-size: clamp(16px, 4.5vw, 28px);
+  }
+}
+/* ===========================
+   STACKING CARDS SECTION
+=========================== */
+
+section.black {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: #f6f6f6;
+}
+
+/* Each stacking layer */
+.block {
+  position: absolute;
+  inset: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: height;
+  background: #f6f6f6;
+}
+
+/* Card layout */
+.card {
+  width: min(85%, 1100px);
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: clamp(30px, 5vw, 60px);
+  align-items: center;
+}
+
+/* Left Text */
+.card-text h2 {
+  font-family: "Lora", serif;
+font-size: clamp(32px, 4.5vw, 56px);
+
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.card-text p {
+  font-size: clamp(14px, 1.5vw, 18px);
+  line-height: 1.6;
+  color: #555;
+}
+
+.card-text span {
+  display: block;
+  margin-top: 20px;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+/* Right Image */
+.card-image img {
+  width: 100%;
+  height: clamp(250px, 35vw, 380px);
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* ===========================
+   MOBILE RESPONSIVE
+=========================== */
+
+@media (max-width: 768px) {
+  .card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .card-image img {
+    height: 250px;
+  }
+}
+/* ===========================
+   STACKING CARDS SECTION - IMPROVED
+=========================== */
+
+section.black {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: #f6f6f6;
+}
+
+/* Each stacking layer */
+.block {
+  position: absolute;
+  inset: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: height;
+  background: #fff0f0;
+  overflow: hidden; /* Prevents image overflow */
+}
+.block.wow   {
+  position: absolute;
+  inset: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: height;
+  background: #e2d9d9;
+  overflow: hidden; /* Prevents image overflow */
+}
+/* Card layout */
+.card {
+  width: min(85%, 1100px);
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: clamp(30px, 5vw, 60px);
+  align-items: center;
+  position: relative; /* Ensures proper containment */
+}
+
+/* Left Text */
+.card-text h2 {
+  font-family: "Lora", serif;
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #161616;
+}
+
+.card-text p {
+  font-size: clamp(14px, 1.5vw, 18px);
+  line-height: 1.6;
+  color: #555;
+}
+
+.card-text span {
+  display: block;
+  margin-top: 20px;
+  font-size: 12px;
+  letter-spacing: 2px;
+  color: #8b7d6b;
+  text-transform: uppercase;
+}
+
+/* Right Image */
+.card-image {
+  position: relative;
+  overflow: hidden; /* Prevents image from bleeding */
+  border-radius: 6px;
+}
+
+.card-image img {
+  width: 100%;
+  height: clamp(250px, 35vw, 380px);
+  object-fit: cover;
+  border-radius: 6px;
+  display: block; /* Removes any inline spacing */
+}
+
+/* ===========================
+   MOBILE RESPONSIVE
+=========================== */
+
+@media (max-width: 768px) {
+  .card {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 30px;
+  }
+
+  .card-image img {
+    height: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    width: min(90%, 1100px);
+    gap: 20px;
+  }
+
+  .card-text h2 {
+    font-size: clamp(24px, 5vw, 36px);
+  }
+
+  .card-text p {
+    font-size: clamp(13px, 3.5vw, 16px);
+  }
+
+  .card-image img {
+    height: 220px;
+  }
+}
+
+.carousel-section {
+  /* Light pink/cream background */
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Responsive carousel section */
+@media (max-width: 768px) {
+  .carousel-section {
+    height: 60vh;  /* Shorter on tablets */
+  }
+}
+
+@media (max-width: 480px) {
+  .carousel-section {
+    height: 50vh;  /* Even shorter on mobile */
+  }
+}.dome-gallery-section {
+  width: 100vw;
+  height: 100vh;
+  background: #f7ecec;  /* Match Valentine's theme */
+  position: relative;
+  overflow: hidden;
+}
+
+/* Responsive dome gallery */
+@media (max-width: 1024px) {
+  .dome-gallery-section {
+    height: 80vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .dome-gallery-section {
+    height: 70vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .dome-gallery-section {
+    height: 60vh;
+  }
+}
+/* HORIZONTAL SCROLL SECTION */
+.horizontal-container {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  background: #f7ecec;
+}
+
+.horizontal-panel {
+  min-width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+
+}
+
+/* SCRAPBOOK PANEL WITH BACKGROUND */
+/* SCRAPBOOK PANEL WITH BACKGROUND */
+.scrapbook-panel {
+  background: #f5ebe6;
+  padding: clamp(30px, 5vw, 60px);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background image (base) with LOW OPACITY */
+.scrapbook-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: inherit;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.9; /* Added opacity - adjust from 0.1 to 0.5 */
+  z-index: 0;
+}
+
+/* Optional: Add a subtle white overlay for better text contrast */
+.scrapbook-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(207, 207, 207, 0.4); /* Increased from 0.08 to 0.4 */
+  z-index: 1;
+  pointer-events: none;
+}
+
+.scrapbook-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.scrapbook-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: clamp(40px, 6vw, 60px);
+  position: relative;
+  z-index: 2;
+}
+
+.page-number {
+  font-family: "Lora", serif;
+  font-size: clamp(1rem, 2vw, 1.5rem);
+  color: #681111;
+  font-weight: 600;
+}
+
+.header-text {
+  font-family: "Lora", serif;
+  font-size: clamp(2rem, 6vw, 6rem);
+  line-height: 1.1;
+  text-align: center; 
+}
+
+.you-text,
+.to-text {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  color: #e7e7e7;
+  font-weight: 400;
+  font-family: "Lora", serif;
+}
+
+.big-y {
+  font-size: clamp(4rem, 12vw, 13rem);
+  font-weight: 300;
+  margin-right: clamp(5px, 1vw, 15px);
+  line-height: 0.8;
+  font-family: "ImperialScript", cursive;
+  color: #771212;
+}
+
+.divine-text {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  color: #771212;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  font-family: "Soria", cursive;
+  text-decoration-color: #771212;
+  text-decoration-thickness: 2px;
+}
+
+.mine-text {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  color: #771212;
+  font-weight: 700;
+}
+
+/* Vinyl Scrapbook Header */
+.vinyl-scrapbook-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(20px, 4vw, 40px);
+  margin-bottom: clamp(40px, 6vw, 60px);
+  width: 100%;
+}
+
+.vinyl-star-left,
+.vinyl-star-right {
+  font-size: clamp(35px, 5vw, 60px);
+  color: #d4b5a8;
+  opacity: 0.7;
+}
+
+.vinyl-header-text {
+  text-align: center;
+  font-family: "Lora", serif;
+  display: inline-block;
+}
+
+.vinyl-you-text,
+.vinyl-remind-text,
+.vinyl-of-text,
+.vinyl-the-text {
+  font-size: clamp(24px, 4vw, 50px);
+  color: #8b8378;
+  font-style: italic;
+  font-weight: 300;
+  display: inline;
+}
+
+.vinyl-remind-text {
+  color: #771212;
+}
+
+.vinyl-blue-text {
+  font-size: clamp(40px, 6vw, 96px);
+  color: #771212;
+  font-family: "ImperialScript", cursive;
+  font-style: italic;
+  font-weight: 500;
+  display: inline;
+  margin-left: 8px;
+}
+
+/* Vinyl Scrapbook Grid - HORIZONTAL ROW LAYOUT */
+.vinyl-scrapbook-grid {
+  display: flex;
+  flex-direction: row; /* Albums side by side */
+  gap: clamp(40px, 6vw, 80px);
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.vinyl-photo-item {
+  display: flex;
+  flex-direction: column; /* Image on top, caption below */
+  align-items: center;
+  gap: clamp(15px, 2vw, 25px);
+  flex: 1;
+  max-width: 350px;
+}
+
+/* Album Container */
+.vinyl-album-container {
+  position: relative;
+  width: 100%;
+  max-width: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none !important;
+  outline: none !important;
+  background: transparent !important;
+}
+
+.vinyl-album-cover {
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Photo Captions - Below images */
+.vinyl-photo-caption {
+  text-align: center;
+  font-family: "Lora", serif; 
+font-size: clamp(13px, 1.8vw, 18px);
+
+  line-height: 1.7;
+  width: 100%;
+  max-width:900px;
+  color: #6b6b6b;
+}
+
+.vinyl-caption-italic {
+  color: #707070;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.vinyl-caption-bold {
+  font-weight: 700;
+  font-style: normal;
+  color: #771212;
+}
+
+.vinyl-caption-center {
+  position: relative;
+  padding: 0 clamp(20px, 3vw, 30px);
+}
+
+
+
+
+/* Remove borders */
+.scrapbook-panel,
+.horizontal-panel {
+  border: none !important;
+  outline: none !important;
+}
+
+/* Desktop & Large Screens (1366px+) */
+@media (min-width: 1367px) {
+  .vinyl-scrapbook-grid {
+    gap: 80px;
+  }
+
+  .vinyl-photo-item {
+    max-width: 350px;
+  }
+
+  .vinyl-album-container,
+  .vinyl-album-cover {
+    max-width: 300px;
+  }
+}
+
+/* Tablet Landscape (1024px - 1366px) */
+@media (max-width: 1366px) {
+  .vinyl-scrapbook-grid {
+    gap: 60px;
+    max-width: 1200px;
+  }
+
+  .vinyl-photo-item {
+    max-width: 300px;
+  }
+
+  .vinyl-album-container,
+  .vinyl-album-cover {
+    max-width: 250px;
+  }
+}
+
+/* Tablet Portrait & iPad (768px - 1024px) */
+@media (max-width: 1024px) {
+  .vinyl-scrapbook-header {
+    gap: 30px;
+    margin-bottom: 50px;
+  }
+
+  .vinyl-scrapbook-grid {
+    gap: 50px;
+    max-width: 900px;
+  }
+
+  .vinyl-photo-item {
+    max-width: 260px;
+  }
+
+  .vinyl-album-container,
+  .vinyl-album-cover {
+    max-width: 220px;
+  }
+
+  .vinyl-photo-caption {
+    font-size: 12px;
+    max-width: 250px;
+  }
+}
+
+/* Small Tablets & Large Phones (600px - 768px) */
+@media (max-width: 768px) {
+  .vinyl-scrapbook-header {
+    gap: 25px;
+    margin-bottom: 40px;
+  }
+
+  .vinyl-scrapbook-grid {
+    gap: 30px;
+    flex-wrap: wrap; /* Allow wrapping if needed */
+  }
+
+  .vinyl-photo-item {
+    max-width: 220px;
+    min-width: 180px;
+  }
+
+  .vinyl-album-container,
+  .vinyl-album-cover {
+    max-width: 200px;
+  }
+
+  .vinyl-star-left,
+  .vinyl-star-right {
+    font-size: 40px;
+  }
+
+  .vinyl-photo-caption {
+    font-size: 11px;
+    max-width: 220px;
+  }
+
+  .vinyl-quote-left,
+  .vinyl-quote-right {
+    font-size: 18px;
+  }
+}
+
+/* Mobile Landscape & Small Tablets (480px - 600px) */
+@media (max-width: 600px) {
+  .vinyl-scrapbook-grid {
+    gap: 25px;
+    padding: 15px 10px;
+  }
+
+  .vinyl-photo-item {
+    max-width: 180px;
+    min-width: 150px;
+  }
+
+  .vinyl-album-container,
+  .vinyl-album-cover {
+    max-width: 160px;
+  }
+
+  .vinyl-photo-caption {
+    font-size: 10px;
+    max-width: 180px;
+    line-height: 1.5;
+  }
+}
+
+/* Mobile Portrait (up to 480px) */
+@media (max-width: 480px) {
+  .vinyl-scrapbook-header {
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+
+  .vinyl-star-left,
+  .vinyl-star-right {
+    display: none;
+  }
+
+  .vinyl-scrapbook-grid {
+    gap: 20px;
+    padding: 10px;
+    flex-wrap: wrap;
+  }
+
+  .vinyl-photo-item {
+    max-width: 150px;
+    min-width: 120px;
+  }
+
+  .vinyl-album-container,
+  .vinyl-album-cover {
+    max-width: 140px;
+  }
+
+  .vinyl-photo-caption {
+    font-size: 9px;
+    max-width: 150px;
+    line-height: 1.4;
+  }
+
+  .vinyl-quote-left,
+  .vinyl-quote-right {
+    font-size: 14px;
+  }
+
+  .vinyl-quote-left {
+    left: -3px;
+    top: -5px;
+  }
+
+  .vinyl-quote-right {
+    right: -3px;
+    bottom: -8px;
+  }
+}
+
+/* Very Small Mobile (up to 375px) */
+@media (max-width: 375px) {
+  .vinyl-scrapbook-grid {
+    gap: 15px;
+  }
+
+  .vinyl-photo-item {
+    max-width: 130px;
+    min-width: 100px;
+  }
+
+  .vinyl-album-container,
+  .vinyl-album-cover {
+    max-width: 120px;
+  }
+
+  .vinyl-photo-caption {
+    font-size: 8px;
+    max-width: 130px;
+  }
+
+  .vinyl-quote-left,
+  .vinyl-quote-right {
+    font-size: 12px;
+  }
+}
+
+/* Extra Small (up to 320px) */
+@media (max-width: 320px) {
+  .vinyl-scrapbook-grid {
+    gap: 12px;
+    flex-direction: column; /* Stack on very small screens */
+    align-items: center;
+  }
+
+  .vinyl-photo-item {
+    max-width: 100%;
+    width: 90%;
+  }
+
+  .vinyl-album-container,
+  .vinyl-album-cover {
+    max-width: 180px;
+  }
+
+  .vinyl-photo-caption {
+    font-size: 9px;
+    max-width: 90%;
+  }
+}/* ===========================
+   STACKING CARDS SECTION - BEAUTIFUL TYPOGRAPHY & FULLY RESPONSIVE
+=========================== */
+
+section.black {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background: #f6f6f6;
+}
+
+/* Each stacking layer */
+.block {
+  position: absolute;
+  inset: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: height;
+  background: #fff5f0;
+  overflow: hidden;
+}
+
+
+/* Card layout */
+.card {
+  width: min(90%, 1200px);
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: clamp(40px, 6vw, 80px);
+  align-items: center;
+  position: relative;
+  padding: clamp(20px, 3vw, 40px);
+}
+
+/* ===========================
+   BEAUTIFUL TYPOGRAPHY
+=========================== */
+
+/* Card Title */
+.card-text h2 {
+  font-family: "Lora", serif;
+  font-size: clamp(28px, 4.5vw, 56px);
+  font-weight: 600;
+  margin-bottom: clamp(20px, 2.5vw, 30px);
+  color: #2c2c2c;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Card Paragraph */
+.card-text p {
+  font-family: "Lora", serif;
+  font-size: clamp(14px, 1.8vw, 20px);
+  line-height: 1.75;
+  color: #4a4a4a;
+  margin-bottom: clamp(20px, 2.5vw, 28px);
+  text-align: justify;
+  hyphens: auto;
+  word-spacing: 0.05em;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  font-weight: 400;
+}
+
+/* Card Date/Label */
+.card-text span {
+  display: block;
+  font-family: "Lora", serif;
+  font-size: clamp(11px, 1.3vw, 14px);
+  letter-spacing: 0.15em;
+  color: #8b7d6b;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-style: italic;
+  margin-top: clamp(8px, 1vw, 12px);
+}
+
+
+/* ===========================
+   DESKTOP (1440px+)
+=========================== */
+@media (min-width: 1440px) {
+  .card {
+    width: min(85%, 1300px);
+    gap: 90px;
+  }
+
+  .card-text h2 {
+    font-size: 60px;
+    margin-bottom: 32px;
+  }
+
+  .card-text p {
+    font-size: 21px;
+    line-height: 1.8;
+  }
+
+  .card-text span {
+    font-size: 15px;
+  }
+
+  .memory-image,
+  .memory-video {
+    height: 480px;
+  }
+}
+
+/* ===========================
+   LAPTOP (1024px - 1440px)
+=========================== */
+@media (max-width: 1439px) and (min-width: 1024px) {
+  .card {
+    width: min(88%, 1100px);
+    gap: clamp(50px, 5vw, 70px);
+  }
+
+  .card-text h2 {
+    font-size: clamp(36px, 4vw, 48px);
+  }
+
+  .card-text p {
+    font-size: clamp(16px, 1.7vw, 19px);
+    line-height: 1.7;
+  }
+
+  .memory-image,
+  .memory-video {
+    height: clamp(320px, 38vw, 400px);
+  }
+}
+
+/* ===========================
+   TABLET LANDSCAPE (768px - 1024px)
+=========================== */
+@media (max-width: 1023px) and (min-width: 768px) {
+  .card {
+    width: min(90%, 900px);
+    gap: clamp(35px, 5vw, 50px);
+  }
+
+  .card-text h2 {
+    font-size: clamp(32px, 4.2vw, 42px);
+    margin-bottom: clamp(18px, 2vw, 24px);
+  }
+
+  .card-text p {
+    font-size: clamp(15px, 2vw, 18px);
+    line-height: 1.65;
+  }
+
+  .card-text span {
+    font-size: clamp(10px, 1.5vw, 13px);
+  }
+
+  .memory-image,
+  .memory-video {
+    height: clamp(280px, 36vw, 350px);
+  }
+}
+
+/* ===========================
+   TABLET PORTRAIT (600px - 768px)
+=========================== */
+@media (max-width: 767px) and (min-width: 600px) {
+  .card {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: clamp(25px, 5vw, 35px);
+    width: min(92%, 650px);
+  }
+
+  .card-text h2 {
+    font-size: clamp(28px, 5vw, 38px);
+    margin-bottom: 18px;
+  }
+
+  .card-text p {
+    font-size: clamp(14px, 2.5vw, 17px);
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  .card-text span {
+    font-size: clamp(10px, 1.8vw, 12px);
+    margin-top: 12px;
+  }
+
+  .memory-image,
+  .memory-video {
+    height: clamp(260px, 45vw, 320px);
+    max-width: 90%;
+    margin: 0 auto;
+  }
+
+  /* Touch devices - show color on tap */
+  .card-image:active .memory-image {
+    filter: grayscale(0%);
+  }
+}
+
+/* ===========================
+   MOBILE LANDSCAPE (480px - 600px)
+=========================== */
+@media (max-width: 599px) and (min-width: 480px) {
+  .card {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 22px;
+    width: min(94%, 550px);
+    padding: 20px;
+  }
+
+  .card-text h2 {
+    font-size: clamp(24px, 5.5vw, 32px);
+    margin-bottom: 15px;
+    letter-spacing: -0.01em;
+  }
+
+  .card-text p {
+    font-size: clamp(13px, 3vw, 15px);
+    line-height: 1.55;
+    text-align: left;
+    hyphens: auto;
+  }
+
+  .card-text span {
+    font-size: clamp(9px, 2vw, 11px);
+    letter-spacing: 0.12em;
+    margin-top: 10px;
+  }
+
+  .memory-image,
+  .memory-video {
+    height: clamp(220px, 50vw, 280px);
+    border-radius: 8px;
+  }
+
+  .card-image:active .memory-image {
+    filter: grayscale(0%);
+  }
+}
+
+/* ===========================
+   MOBILE PORTRAIT (375px - 480px)
+=========================== */
+@media (max-width: 479px) and (min-width: 375px) {
+  .card {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 20px;
+    width: min(95%, 450px);
+    padding: 18px;
+  }
+
+  .card-text h2 {
+    font-size: clamp(22px, 6vw, 28px);
+    margin-bottom: 12px;
+    line-height: 1.15;
+  }
+
+  .card-text p {
+    font-size: clamp(12px, 3.5vw, 14px);
+    line-height: 1.5;
+    text-align: left;
+    margin-bottom: 16px;
+  }
+
+  .card-text span {
+    font-size: clamp(8px, 2.2vw, 10px);
+    letter-spacing: 0.1em;
+    margin-top: 8px;
+  }
+
+  .memory-image,
+  .memory-video {
+    height: clamp(200px, 55vw, 260px);
+    border-radius: 6px;
+  }
+
+  .card-image:active .memory-image {
+    filter: grayscale(0%);
+    transform: scale(1.02);
+  }
+}
+
+/* ===========================
+   SMALL MOBILE (320px - 375px)
+=========================== */
+@media (max-width: 374px) and (min-width: 320px) {
+  .card {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 16px;
+    width: 96%;
+    padding: 15px;
+  }
+
+  .card-text h2 {
+    font-size: clamp(20px, 6.5vw, 24px);
+    margin-bottom: 10px;
+    line-height: 1.1;
+  }
+
+  .card-text p {
+    font-size: clamp(11px, 3.8vw, 13px);
+    line-height: 1.45;
+    text-align: left;
+    margin-bottom: 14px;
+  }
+
+  .card-text span {
+    font-size: 8px;
+    letter-spacing: 0.08em;
+    margin-top: 6px;
+  }
+
+  .memory-image,
+  .memory-video {
+    height: clamp(180px, 60vw, 240px);
+    border-radius: 6px;
+  }
+}
+
+/* ===========================
+   EXTRA SMALL MOBILE (below 320px)
+=========================== */
+@media (max-width: 319px) {
+  .card {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    width: 98%;
+    padding: 12px;
+  }
+
+  .card-text h2 {
+    font-size: 18px;
+    margin-bottom: 8px;
+    line-height: 1.1;
+  }
+
+  .card-text p {
+    font-size: 11px;
+    line-height: 1.4;
+    text-align: left;
+    margin-bottom: 12px;
+  }
+
+  .card-text span {
+    font-size: 7px;
+    letter-spacing: 0.06em;
+  }
+
+  .memory-image,
+  .memory-video {
+    height: 200px;
+  }
+}
+
+/* ===========================
+   IPAD SPECIFIC OPTIMIZATIONS
+=========================== */
+
+/* iPad Pro 12.9" (1024x1366) */
+@media only screen 
+  and (min-device-width: 1024px) 
+  and (max-device-width: 1366px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+  
+  .card {
+    width: min(88%, 1050px);
+    gap: 60px;
+  }
+
+  .card-text h2 {
+    font-size: 44px;
+  }
+
+  .card-text p {
+    font-size: 18px;
+    line-height: 1.7;
+  }
+
+  .memory-image,
+  .memory-video {
+    height: 380px;
+  }
+}
+
+/* iPad Pro 11" & iPad Air (820x1180) */
+@media only screen 
+  and (min-device-width: 820px) 
+  and (max-device-width: 1024px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+  
+  .card {
+    width: min(90%, 900px);
+    gap: 50px;
+  }
+
+  .card-text h2 {
+    font-size: 38px;
+  }
+
+  .card-text p {
+    font-size: 17px;
+    line-height: 1.65;
+  }
+
+  .memory-image,
+  .memory-video {
+    height: 340px;
+  }
+}
+
+/* iPad Mini (768x1024) */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 820px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+  
+  .card {
+    grid-template-columns: 1fr;
+    width: min(90%, 700px);
+    gap: 30px;
+  }
+
+  .card-text h2 {
+    font-size: 34px;
+  }
+
+  .card-text p {
+    font-size: 16px;
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  .memory-image,
+  .memory-video {
+    height: 300px;
+  }
+}
+
+/* ===========================
+   TYPOGRAPHY ENHANCEMENTS
+=========================== */
+
+/* Better text rendering on all devices */
+.card-text h2,
+.card-text p,
+.card-text span {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Improve readability on retina displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .card-text p {
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+}
+
+/* ===========================
+   ACCESSIBILITY
+=========================== */
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .memory-image,
+  .memory-video,
+  .card-image,
+  .card-video {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .card-text h2 {
+    color: #000;
+  }
+
+  .card-text p {
+    color: #1a1a1a;
+  }
+}/* ===========================
+   FIXED VIDEO/IMAGE HEIGHT - HINDI NA SOBRANG HABA!
+=========================== */
+
+.memory-image,
+.memory-video {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  max-height: 500px; /* ADDED - limits maximum height */
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border-radius: clamp(8px, 1.5vw, 12px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  transition: transform 0.4s ease, filter 0.6s ease, box-shadow 0.3s ease;
+}
+
+/* Black & white default */
+.memory-image {
+  filter: grayscale(100%);
+}
+
+/* Hover effects */
+.memory-image:hover {
+  filter: grayscale(0%);
+  transform: scale(1.03);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+}
+
+.memory-video:hover {
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+}
+
+/* RESPONSIVE - Adjust max-height per screen size */
+@media (min-width: 1440px) {
+  .memory-image,
+  .memory-video {
+    min-height: 450px;
+    max-height: 550px;
+  }
+}
+
+@media (max-width: 1439px) and (min-width: 1024px) {
+  .memory-image,
+  .memory-video {
+    min-height: 380px;
+    max-height: 480px;
+  }
+}
+
+@media (max-width: 1023px) and (min-width: 768px) {
+  .memory-image,
+  .memory-video {
+    min-height: 320px;
+    max-height: 420px;
+  }
+}
+
+@media (max-width: 767px) and (min-width: 480px) {
+  .memory-image,
+  .memory-video {
+    min-height: 280px;
+    max-height: 380px;
+  }
+}
+
+@media (max-width: 479px) {
+  .memory-image,
+  .memory-video {
+    min-height: 240px;
+    max-height: 340px;
+  }
+}
+
+
+
+.hero-footer {
+  position: absolute;
+  bottom: 25px;
+  left: 40px;
+  font-family: "Lora", serif; /* fix typo from Loria */
+  font-size: clamp(14px, 1.8vw, 18px);
+  color: #666666;
+  opacity: 0.9;
+  letter-spacing: 0.04em;
+}
+
+.klent {
+  font-family: "ImperialScript", cursive;
+  font-size: clamp(20px, 3vw, 28px); /* mas malaki */
+  color: #771212; /* romantic red */
+  margin-left: 6px;
+  font-weight: 400;
+}
+.card-text h2 {
+
+font-size: clamp(32px, 4.5vw, 56px);
+
+}

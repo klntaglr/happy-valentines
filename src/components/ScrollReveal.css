@@ -1,0 +1,108 @@
+@font-face {
+  font-family: "Sail";
+  src: url("../assets/fonts/Sail-Regular.otf") format("opentype");
+  font-display: swap;
+}
+/* font-family: "AlexBrush", cursive;
+  font-family: "Sail", cursive;
+font-family: "Lora", serif; */
+  /* font-family: "Soria", cursive; */
+  /* font-family: "ImperialScript", cursive; */
+@font-face {
+  font-family: "Lora";
+  src: url("../assets/fonts/Lora-VariableFont_wght.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "AlexBrush";
+  src: url("../assets/fonts/AlexBrush-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+:root {
+  /* Colors */
+  --primary-bg: #fdfbf9;
+  --secondary-bg: #fef9f5;
+  --tertiary-bg: #fff5ed;
+  --text-primary: #161616;
+  --text-secondary: #8b7d6b;
+  --text-tertiary: #a89885;
+  --accent-brown: #a67c52;
+  --accent-rose: #681111;
+  --accent-love: #681111;
+  --accent-gold: #d4b5a0;
+  --accent-light: #f0dfd0;
+
+  /* Fonts */
+  --font-script: "AlexBrush", cursive;
+  --font-body: "Lora", serif;
+
+  /* Spacing */
+  --spacing-xs: clamp(8px, 2vw, 12px);
+  --spacing-sm: clamp(12px, 3vw, 20px);
+  --spacing-md: clamp(20px, 5vw, 40px);
+  --spacing-lg: clamp(30px, 8vw, 60px);
+  --spacing-xl: clamp(40px, 10vw, 80px);
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+
+.scroll-reveal-text {
+font-size: clamp(1.2rem, 3vw, 2.4rem);
+
+  line-height: 1.4;
+  font-weight: 600;
+  font-family: "Lora", serif;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 4vw, 40px);
+}
+
+.word {
+  display: inline-block;
+}
+@media (max-width: 768px) {
+  .scroll-reveal-text {
+    font-size: clamp(1.2rem, 5vw, 2rem);
+    line-height: 1.6;
+  }
+}
+/* ===========================
+   HIGHLIGHT STYLES FOR ROMANTIC MESSAGE
+   Add these to your Home.css file
+   =========================== */
+
+
+.heart-glow {
+  color: #681111;
+  font-weight: 700;
+  font-family: "Lora", serif;
+
+}
+
+.warm-embrace {
+  color: #681111;
+  font-weight: 700;
+  font-family: "Lora", serif;
+}
+
+.soft-blush {
+  color: #681111;
+  font-weight: 700;
+  font-style: normal;
+}  
+
+
+.base-text {
+  color: #757575; /* Dark charcoal black */
+  font-weight: 500;
+  font-style: normal;
+   font-family: "Lora", serif;
+   font-style: italic;
+}

@@ -1,0 +1,339 @@
+.logoloop {
+  position: relative;
+  --logoloop-gap: 80px;
+  --logoloop-logoHeight: 500px;
+  --logoloop-fadeColorAuto: #f7ecec;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+@font-face {
+  font-family: "Sail";
+  src: url("../assets/fonts/Sail-Regular.otf") format("opentype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Lora";
+  src: url("../assets/fonts/Lora-VariableFont_wght.ttf") format("truetype");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "AlexBrush";
+  src: url("../assets/fonts/AlexBrush-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.logoloop--vertical {
+  height: 100%;
+  display: inline-block;
+}
+
+.logoloop--scale-hover {
+  padding: 0;
+}
+
+@media (prefers-color-scheme: dark) {
+  .logoloop {
+    --logoloop-fadeColorAuto: #f7ecec;
+  }
+}
+
+.logoloop__track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  user-select: none;
+  position: relative;
+  z-index: 0;
+  align-items: center;
+  height: 100%;
+}
+
+.logoloop--vertical .logoloop__track {
+  flex-direction: column;
+  height: max-content;
+  width: 100%;
+}
+
+.logoloop__list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+}
+
+.logoloop--vertical .logoloop__list {
+  flex-direction: column;
+}
+
+.logoloop__item {
+  flex: 0 0 auto;
+  margin-right: var(--logoloop-gap);
+  line-height: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.logoloop--vertical .logoloop__item {
+  margin-right: 0;
+  margin-bottom: var(--logoloop-gap);
+}
+
+.logoloop__item:last-child {
+  margin-right: var(--logoloop-gap);
+}
+
+.logoloop--vertical .logoloop__item:last-child {
+  margin-right: 0;
+  margin-bottom: var(--logoloop-gap);
+}
+
+.logoloop__node {
+  display: inline-flex;
+  align-items: center;
+}
+
+.logoloop__frame {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* LARGE CAROUSEL IMAGE WITH BURGUNDY POLAROID FRAME */
+.logoloop__item img {
+  height: var(--logoloop-logoHeight);
+  width: auto;
+  max-width: 800px;
+  display: block;
+  object-fit: cover;
+  border-radius: 3px;
+  box-shadow: 
+    0 10px 30px rgba(104, 17, 17, 0.3),
+    0 5px 15px rgba(104, 17, 17, 0.2);
+  border: 20px solid #681111;
+  border-bottom: 60px solid #681111;
+  -webkit-user-drag: none;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #681111;
+}
+
+/* POLAROID CAPTION/YEAR */
+.logoloop__caption {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #f7ecec;
+  font-family: "AlexBrush", cursive;
+  font-size: 30px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-align: center;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Smooth hover effect */
+.logoloop--scale-hover .logoloop__item:hover img {
+  transform: scale(1.05) translateY(-10px) rotate(-2deg);
+  box-shadow: 
+    0 20px 50px rgba(104, 17, 17, 0.4),
+    0 10px 25px rgba(104, 17, 17, 0.3);
+}
+
+.logoloop__link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  border-radius: 3px;
+  height: 100%;
+}
+
+/* FADE EDGES */
+.logoloop--fade::before,
+.logoloop--fade::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.logoloop--fade::before {
+  left: 0;
+  background: linear-gradient(
+    to right,
+    var(--logoloop-fadeColor, var(--logoloop-fadeColorAuto)) 0%,
+    transparent 100%
+  );
+}
+
+.logoloop--fade::after {
+  right: 0;
+  background: linear-gradient(
+    to left,
+    var(--logoloop-fadeColor, var(--logoloop-fadeColorAuto)) 0%,
+    transparent 100%
+  );
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================ */
+
+/* iPad Pro & Large Tablets (1024px - 1366px) */
+@media (max-width: 1366px) {
+  .logoloop {
+    --logoloop-gap: 60px;
+    --logoloop-logoHeight: 450px;
+  }
+  
+  .logoloop__item img {
+    max-width: 600px;
+    border: 18px solid #681111;
+    border-bottom: 55px solid #681111;
+  }
+  
+  .logoloop__caption {
+    font-size: 26px;
+    bottom: 12px;
+  }
+}
+
+/* iPad & Medium Tablets (768px - 1024px) */
+@media (max-width: 1024px) {
+  .logoloop {
+    --logoloop-gap: 50px;
+    --logoloop-logoHeight: 400px;
+  }
+  
+  .logoloop__item img {
+    max-width: 500px;
+    border: 15px solid #681111;
+    border-bottom: 50px solid #681111;
+  }
+  
+  .logoloop__caption {
+    font-size: 24px;
+    bottom: 10px;
+  }
+  
+  .logoloop--fade::before,
+  .logoloop--fade::after {
+    width: 40px;
+  }
+}
+
+/* iPad Mini & Small Tablets (600px - 768px) */
+@media (max-width: 768px) {
+  .logoloop {
+    --logoloop-gap: 40px;
+    --logoloop-logoHeight: 350px;
+  }
+  
+  .logoloop__item img {
+    max-width: 400px;
+    border: 12px solid #681111;
+    border-bottom: 45px solid #681111;
+  }
+  
+  .logoloop__caption {
+    font-size: 22px;
+    bottom: 8px;
+  }
+}
+
+/* Mobile Landscape & Large Phones (480px - 600px) */
+@media (max-width: 600px) {
+  .logoloop {
+    --logoloop-gap: 30px;
+    --logoloop-logoHeight: 300px;
+  }
+  
+  .logoloop__item img {
+    max-width: 350px;
+    border: 10px solid #681111;
+    border-bottom: 40px solid #681111;
+  }
+  
+  .logoloop__caption {
+    font-size: 20px;
+    bottom: 8px;
+  }
+  
+  .logoloop--fade::before,
+  .logoloop--fade::after {
+    width: 30px;
+  }
+}
+
+/* Mobile Portrait (320px - 480px) */
+@media (max-width: 480px) {
+  .logoloop {
+    --logoloop-gap: 25px;
+    --logoloop-logoHeight: 250px;
+  }
+  
+  .logoloop__item img {
+    max-width: 280px;
+    border: 8px solid #681111;
+    border-bottom: 35px solid #681111;
+  }
+  
+  .logoloop__caption {
+    font-size: 18px;
+    bottom: 6px;
+  }
+  
+  /* Disable hover effects on mobile */
+  .logoloop--scale-hover .logoloop__item:hover img {
+    transform: none;
+  }
+}
+
+/* Small Mobile (320px and below) */
+@media (max-width: 375px) {
+  .logoloop {
+    --logoloop-gap: 20px;
+    --logoloop-logoHeight: 220px;
+  }
+  
+  .logoloop__item img {
+    max-width: 240px;
+    border: 6px solid #681111;
+    border-bottom: 30px solid #681111;
+  }
+  
+  .logoloop__caption {
+    font-size: 16px;
+    bottom: 5px;
+  }
+  
+  .logoloop--fade::before,
+  .logoloop--fade::after {
+    width: 20px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logoloop__track {
+    transform: translate3d(0, 0, 0) !important;
+  }
+
+  .logoloop__item img {
+    transition: none !important;
+  }
+}

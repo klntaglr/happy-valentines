@@ -1,0 +1,778 @@
+.sphere-root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  --radius: 520px;
+  --viewer-pad: 72px;
+  --circ: calc(var(--radius) * 3.14);
+  --rot-y: calc((360deg / var(--segments-x)) / 2);
+  --rot-x: calc((360deg / var(--segments-y)) / 2);
+  --item-width: calc(var(--circ) / var(--segments-x));
+  --item-height: calc(var(--circ) / var(--segments-y));
+}
+
+.sphere-root * {
+  box-sizing: border-box;
+}
+
+.sphere,
+.item,
+.item__image {
+  transform-style: preserve-3d;
+}
+
+main.sphere-main {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  background: transparent;/* ===========================
+   RESPONSIVE DOME GALLERY - MOBILE, TABLET, DESKTOP
+=========================== */
+
+.sphere-root {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  --radius: 520px;
+  --viewer-pad: 72px;
+  --circ: calc(var(--radius) * 3.14);
+  --rot-y: calc((360deg / var(--segments-x)) / 2);
+  --rot-x: calc((360deg / var(--segments-y)) / 2);
+  --item-width: calc(var(--circ) / var(--segments-x));
+  --item-height: calc(var(--circ) / var(--segments-y));
+}
+
+.sphere-root * {
+  box-sizing: border-box;
+}
+
+.sphere,
+.item,
+.item__image {
+  transform-style: preserve-3d;
+}
+
+main.sphere-main {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  background: transparent;
+}
+
+.stage {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  perspective: calc(var(--radius) * 2);
+  perspective-origin: 50% 50%;
+  contain: layout paint size;
+}
+
+.sphere {
+  transform: translateZ(calc(var(--radius) * -1));
+  will-change: transform;
+}
+
+.overlay,
+.overlay--blur {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Remove blur overlay */
+.overlay {
+  background: transparent;
+}
+
+.overlay--blur {
+  display: none;
+}
+
+.item {
+  width: calc(var(--item-width) * var(--item-size-x));
+  height: calc(var(--item-height) * var(--item-size-y));
+  position: absolute;
+  top: -999px;
+  bottom: -999px;
+  left: -999px;
+  right: -999px;
+  margin: auto;
+  transform-origin: 50% 50%;
+  backface-visibility: hidden;
+  transition: transform 300ms;
+  transform: rotateY(calc(var(--rot-y) * (var(--offset-x) + ((var(--item-size-x) - 1) / 2)) + var(--rot-y-delta, 0deg)))
+    rotateX(calc(var(--rot-x) * (var(--offset-y) - ((var(--item-size-y) - 1) / 2)) + var(--rot-x-delta, 0deg)))
+    translateZ(var(--radius));
+}
+
+.item__image {
+  position: absolute;
+  display: block;
+  inset: 10px;
+  border-radius: var(--tile-radius, 12px);
+  background: transparent;
+  overflow: hidden;
+  backface-visibility: hidden;
+  transition: transform 300ms;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  pointer-events: auto;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+.item__image:focus {
+  outline: none;
+}
+
+.item__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  backface-visibility: hidden;
+  filter: var(--image-filter, none);
+}
+
+.viewer {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--viewer-pad);
+}
+
+.viewer .frame {
+  height: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--enlarge-radius, 32px);
+  display: flex;
+}
+
+@media (max-aspect-ratio: 1/1) {
+  .viewer .frame {
+    height: auto;
+    width: 100%;
+  }
+}
+
+.viewer .scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 500ms ease;
+  backdrop-filter: blur(3px);
+}
+
+.sphere-root[data-enlarging='true'] .viewer .scrim {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.viewer .enlarge {
+  position: absolute;
+  z-index: 30;
+  border-radius: var(--enlarge-radius, 32px);
+  overflow: hidden;
+  transition:
+    transform 500ms ease,
+    opacity 500ms ease;
+  transform-origin: top left;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.viewer .enlarge img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: var(--image-filter, none);
+}
+
+.sphere-root .enlarge-closing img {
+  filter: var(--image-filter, none);
+}
+
+.edge-fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 120px;
+  z-index: 5;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, var(--overlay-blur-color, #060010));
+  opacity: 0.3;
+}
+
+.edge-fade--top {
+  top: 0;
+  transform: rotate(180deg);
+}
+
+.edge-fade--bottom {
+  bottom: 0;
+}
+
+/* ===========================
+   RESPONSIVE BREAKPOINTS
+=========================== */
+
+/* DESKTOP & LARGE SCREENS (1440px+) */
+@media (min-width: 1440px) {
+  .sphere-root {
+    --radius: 600px;
+    --viewer-pad: 80px;
+  }
+  
+  .item__image {
+    inset: 12px;
+  }
+}
+
+/* LAPTOP (1024px - 1440px) */
+@media (max-width: 1439px) and (min-width: 1024px) {
+  .sphere-root {
+    --radius: 480px;
+    --viewer-pad: 60px;
+  }
+  
+  .item__image {
+    inset: 10px;
+  }
+}
+
+/* TABLET LANDSCAPE (768px - 1024px) */
+@media (max-width: 1023px) and (min-width: 768px) {
+  .sphere-root {
+    --radius: 380px;
+    --viewer-pad: 50px;
+  }
+  
+  .item__image {
+    inset: 8px;
+    border-radius: var(--tile-radius, 10px);
+  }
+  
+  .viewer .enlarge {
+    border-radius: var(--enlarge-radius, 24px);
+  }
+  
+  .edge-fade {
+    height: 100px;
+  }
+}
+
+/* TABLET PORTRAIT (600px - 768px) */
+@media (max-width: 767px) and (min-width: 600px) {
+  .sphere-root {
+    --radius: 320px;
+    --viewer-pad: 40px;
+  }
+  
+  .item__image {
+    inset: 6px;
+    border-radius: var(--tile-radius, 8px);
+  }
+  
+  .viewer .enlarge {
+    border-radius: var(--enlarge-radius, 20px);
+  }
+  
+  .edge-fade {
+    height: 80px;
+  }
+}
+
+/* MOBILE LANDSCAPE (480px - 600px) */
+@media (max-width: 599px) and (min-width: 480px) {
+  .sphere-root {
+    --radius: 280px;
+    --viewer-pad: 30px;
+  }
+  
+  .item__image {
+    inset: 5px;
+    border-radius: var(--tile-radius, 6px);
+  }
+  
+  .viewer .enlarge {
+    border-radius: var(--enlarge-radius, 16px);
+  }
+  
+  .edge-fade {
+    height: 60px;
+    opacity: 0.2;
+  }
+}
+
+/* MOBILE PORTRAIT (375px - 480px) */
+@media (max-width: 479px) and (min-width: 375px) {
+  .sphere-root {
+    --radius: 240px;
+    --viewer-pad: 24px;
+  }
+  
+  .item__image {
+    inset: 4px;
+    border-radius: var(--tile-radius, 6px);
+  }
+  
+  .viewer .enlarge {
+    border-radius: var(--enlarge-radius, 12px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  }
+  
+  .edge-fade {
+    height: 50px;
+    opacity: 0.15;
+  }
+  
+  .viewer .scrim {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* SMALL MOBILE (320px - 375px) */
+@media (max-width: 374px) and (min-width: 320px) {
+  .sphere-root {
+    --radius: 200px;
+    --viewer-pad: 20px;
+  }
+  
+  .item__image {
+    inset: 3px;
+    border-radius: var(--tile-radius, 4px);
+  }
+  
+  .viewer .enlarge {
+    border-radius: var(--enlarge-radius, 10px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  }
+  
+  .edge-fade {
+    height: 40px;
+    opacity: 0.1;
+  }
+  
+  .viewer .scrim {
+    background: rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* EXTRA SMALL MOBILE (below 320px) */
+@media (max-width: 319px) {
+  .sphere-root {
+    --radius: 180px;
+    --viewer-pad: 16px;
+  }
+  
+  .item__image {
+    inset: 2px;
+    border-radius: var(--tile-radius, 4px);
+  }
+  
+  .viewer .enlarge {
+    border-radius: var(--enlarge-radius, 8px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+  }
+  
+  .edge-fade {
+    height: 30px;
+    opacity: 0.1;
+  }
+}
+
+/* ===========================
+   IPAD SPECIFIC
+=========================== */
+
+/* iPad Pro 12.9" (1024x1366) */
+@media only screen 
+  and (min-device-width: 1024px) 
+  and (max-device-width: 1366px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+  
+  .sphere-root {
+    --radius: 500px;
+    --viewer-pad: 70px;
+  }
+}
+
+/* iPad Pro 11" & iPad Air (820x1180) */
+@media only screen 
+  and (min-device-width: 820px) 
+  and (max-device-width: 1024px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+  
+  .sphere-root {
+    --radius: 420px;
+    --viewer-pad: 60px;
+  }
+}
+
+/* iPad Mini (768x1024) */
+@media only screen 
+  and (min-device-width: 768px) 
+  and (max-device-width: 820px) 
+  and (-webkit-min-device-pixel-ratio: 2) {
+  
+  .sphere-root {
+    --radius: 360px;
+    --viewer-pad: 50px;
+  }
+}
+
+/* ===========================
+   TOUCH DEVICE OPTIMIZATIONS
+=========================== */
+
+@media (hover: none) and (pointer: coarse) {
+  /* Touch devices - larger tap targets */
+  .item__image {
+    inset: 6px;
+  }
+  
+  /* Better visibility on touch */
+  .viewer .scrim {
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  /* Smoother transitions on mobile */
+  .sphere {
+    transition: transform 0.2s ease-out;
+  }
+}
+
+/* ===========================
+   PERFORMANCE OPTIMIZATIONS
+=========================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .sphere,
+  .item,
+  .item__image,
+  .viewer .enlarge,
+  .viewer .scrim {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Force GPU acceleration on mobile */
+@media (max-width: 768px) {
+  .sphere,
+  .item,
+  .item__image {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: transform;
+  }
+}
+}
+
+.stage {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  perspective: calc(var(--radius) * 2);
+  perspective-origin: 50% 50%;
+  contain: layout paint size;
+}
+
+.sphere {
+  transform: translateZ(calc(var(--radius) * -1));
+  will-change: transform;
+}
+
+.overlay,
+.overlay--blur {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.overlay {
+  background-image: radial-gradient(rgba(235, 235, 235, 0) 65%, var(--overlay-blur-color, #060010) 100%);
+}
+
+.overlay--blur {
+  -webkit-mask-image: radial-gradient(rgba(235, 235, 235, 0) 70%, var(--overlay-blur-color, #060010) 90%);
+  mask-image: radial-gradient(rgba(235, 235, 235, 0) 70%, var(--overlay-blur-color, #060010) 90%);
+  backdrop-filter: blur(3px);
+}
+
+.item {
+  width: calc(var(--item-width) * var(--item-size-x));
+  height: calc(var(--item-height) * var(--item-size-y));
+  position: absolute;
+  top: -999px;
+  bottom: -999px;
+  left: -999px;
+  right: -999px;
+  margin: auto;
+  transform-origin: 50% 50%;
+  backface-visibility: hidden;
+  transition: transform 300ms;
+  transform: rotateY(calc(var(--rot-y) * (var(--offset-x) + ((var(--item-size-x) - 1) / 2)) + var(--rot-y-delta, 0deg)))
+    rotateX(calc(var(--rot-x) * (var(--offset-y) - ((var(--item-size-y) - 1) / 2)) + var(--rot-x-delta, 0deg)))
+    translateZ(var(--radius));
+}
+
+.item__image {
+  position: absolute;
+  display: block;
+  inset: 10px;
+  border-radius: var(--tile-radius, 12px);
+  background: transparent;
+  overflow: hidden;
+  backface-visibility: hidden;
+  transition: transform 300ms;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  pointer-events: auto;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+.item__image:focus {
+  outline: none;
+}
+
+.item__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  backface-visibility: hidden;
+  filter: var(--image-filter, none);
+}
+
+.viewer {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--viewer-pad);
+}
+
+.viewer .frame {
+  height: 100%;
+  aspect-ratio: 1;
+  border-radius: var(--enlarge-radius, 32px);
+  display: flex;
+}
+
+@media (max-aspect-ratio: 1/1) {
+  .viewer .frame {
+    height: auto;
+    width: 100%;
+  }
+}
+
+.viewer .scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.4);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 500ms ease;
+  backdrop-filter: blur(3px);
+}
+
+.sphere-root[data-enlarging='true'] .viewer .scrim {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.viewer .enlarge {
+  position: absolute;
+  z-index: 30;
+  border-radius: var(--enlarge-radius, 32px);
+  overflow: hidden;
+  transition:
+    transform 500ms ease,
+    opacity 500ms ease;
+  transform-origin: top left;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.viewer .enlarge img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: var(--image-filter, none);
+}
+
+.sphere-root .enlarge-closing img {
+  filter: var(--image-filter, none);
+}
+
+.edge-fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 120px;
+  z-index: 5;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, var(--overlay-blur-color, #060010));
+}
+
+.edge-fade--top {
+  top: 0;
+  transform: rotate(180deg);
+}
+
+.edge-fade--bottom {
+  bottom: 0;
+}
+/* Remove or comment out the blur overlay */
+.overlay--blur {
+  /* -webkit-mask-image: radial-gradient(rgba(235, 235, 235, 0) 70%, var(--overlay-blur-color, #060010) 90%);
+  mask-image: radial-gradient(rgba(235, 235, 235, 0) 70%, var(--overlay-blur-color, #060010) 90%);
+  backdrop-filter: blur(3px); */
+  display: none;  /* ADD THIS to completely hide it */
+}
+
+/* Also remove/lighten the radial gradient overlay */
+.overlay {
+  /* background-image: radial-gradient(rgba(235, 235, 235, 0) 65%, var(--overlay-blur-color, #060010) 100%); */
+  background: transparent;  /* CHANGE to transparent */
+}
+
+/* Remove edge fades too if you want */
+.edge-fade {
+  /* display: none; */  /* Uncomment to remove top/bottom fade */
+  opacity: 0.3;  /* Or reduce opacity for lighter fade */
+}/* ===========================
+   DOME GALLERY - COMPLETE BLACK & WHITE WITH HOVER/CLICK COLOR
+   Add this to your DomeGallery.css file
+=========================== */
+
+/* Default: Black & White for all dome images */
+.item__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  backface-visibility: hidden;
+  filter: grayscale(100%); /* BLACK & WHITE DEFAULT */
+  transition: filter 0.5s ease-out, transform 0.3s ease;
+}
+
+/* Hover: Show TRUE COLOR on desktop */
+.item__image:hover img {
+  filter: grayscale(0%) !important; /* TRUE COLOR ON HOVER */
+}
+
+/* Click/Active: Show TRUE COLOR */
+.item__image:active img,
+.item__image[data-focused="true"] img {
+  filter: grayscale(0%) !important; /* TRUE COLOR ON CLICK */
+}
+
+/* Enlarged/Opened Image: ALWAYS show TRUE COLOR */
+.viewer .enlarge img,
+.enlarge-closing img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(0%) !important; /* ALWAYS COLOR WHEN ENLARGED */
+  transition: filter 0.3s ease;
+}
+
+/* Optional: Slight zoom effect on hover */
+.item__image:hover {
+  transform: scale(1.05);
+  z-index: 10;
+}
+
+/* Touch devices - tap to show color */
+@media (hover: none) and (pointer: coarse) {
+  /* On mobile, tap shows color */
+  .item__image:active img {
+    filter: grayscale(0%) !important;
+  }
+  
+  /* Remove hover zoom on touch devices for better performance */
+  .item__image:hover {
+    transform: none;
+  }
+  
+  /* Faster transition on mobile */
+  .item__image img {
+    transition: filter 0.3s ease-out;
+  }
+}
+
+/* Smooth transitions */
+.item__image {
+  transition: transform 0.3s ease, z-index 0s;
+}
+
+/* Faster transitions on mobile for better performance */
+@media (max-width: 768px) {
+  .item__image img {
+    transition: filter 0.3s ease-out;
+  }
+  
+  .item__image {
+    transition: transform 0.2s ease;
+  }
+}
+
+/* Ensure enlarged image is always in color */
+.sphere-root[data-enlarging='true'] .viewer .enlarge img {
+  filter: grayscale(0%) !important;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .item__image img {
+    filter: grayscale(100%) contrast(1.2);
+  }
+  
+  .item__image:hover img,
+  .item__image:active img,
+  .viewer .enlarge img {
+    filter: grayscale(0%) contrast(1.2) !important;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .item__image img {
+    transition: none !important;
+  }
+  
+  .item__image {
+    transition: none !important;
+  }
+}
